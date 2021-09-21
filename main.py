@@ -1,6 +1,7 @@
 from parse_participants import *
 from send_invitaton import *
 
+
 async def main():
     # парсинг участников канала и чата
     channel_url = 'https://t.me/Merge_test2' #input("Введите ссылку на канал: ")
@@ -19,20 +20,20 @@ async def main():
         chat_users_data = json.load(file)
 
     chat_users_dict = {}
-    chat_users_data_id = set()
+    chat_users_data_tag = set()
     for user in chat_users_data:
-        chat_users_data_id.add(user["id"])
-        chat_users_dict[user["id"]] = user["first_name"]
+        chat_users_data_tag.add(user["user"])
+        chat_users_dict[user["user"]] = user["first_name"]
 
-    channel_users_data_id = set()
+    channel_users_data_tag = set()
     for user in channel_users_data:
-        channel_users_data_id.add(user["id"])
+        channel_users_data_tag.add(user["user"])
 
-    invite_users_id = chat_users_data_id.difference(channel_users_data_id)
+    invite_users_tag = chat_users_data_tag.difference(channel_users_data_tag)
 
     invite_users_dict = {}
-    for user_id in invite_users_id:
-        invite_users_dict[user_id] = chat_users_dict[user_id]
+    for user_tag in invite_users_tag:
+        invite_users_dict[user_tag] = chat_users_dict[user_tag]
 
     with open("data/invite_users.json", mode="w", encoding="utf-8") as file:
         json.dump(invite_users_dict, file, ensure_ascii=False)
