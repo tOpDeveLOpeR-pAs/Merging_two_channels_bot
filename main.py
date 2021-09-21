@@ -1,5 +1,5 @@
 from parse_participants import *
-
+from send_invitaton import *
 
 async def main():
     # парсинг участников канала и чата
@@ -22,7 +22,7 @@ async def main():
     chat_users_data_id = set()
     for user in chat_users_data:
         chat_users_data_id.add(user["id"])
-        chat_users_dict[user["id"]] = user["user"]
+        chat_users_dict[user["id"]] = user["first_name"]
 
     channel_users_data_id = set()
     for user in channel_users_data:
@@ -37,6 +37,8 @@ async def main():
     with open("data/invite_users.json", mode="w", encoding="utf-8") as file:
         json.dump(invite_users_dict, file, ensure_ascii=False)
 
+    # отправка сообщений пользователям
+    send_main()
 
 with client:
     client.loop.run_until_complete(main())
