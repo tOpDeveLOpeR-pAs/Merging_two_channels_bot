@@ -49,8 +49,8 @@ async def dump_all_participants(channel, file_name):
         all_users_details.append({"id": participant.id,
                                   "first_name": participant.first_name,
                                   "last_name": participant.last_name,
-                                  "user": participant.username
+                                  "user": participant.username,
                                   })
 
-    with open(file_name, 'w', encoding='utf8') as outfile:
-        json.dump(all_users_details, outfile, ensure_ascii=False)
+    with open(file_name, 'w', encoding='utf8') as file:
+        json.dump(all_users_details, file, ensure_ascii=False)
