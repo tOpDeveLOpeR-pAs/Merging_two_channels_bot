@@ -3,6 +3,7 @@ import json
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
@@ -16,15 +17,26 @@ def init_driver():
     driver = webdriver.Chrome(executable_path="/home/sasha_pavlov/drivers/chrome_selenium_driver/chromedriver",
                               chrome_options=options
                               )
+
     driver.maximize_window()
-    driver.wait = WebDriverWait(driver, 2)
+    driver.wait = WebDriverWait(driver, 5)
     return driver
 
 
 def send_invitation(driver, tag: str, first_name: str):
-    search = driver.find_element_by_class_name("input-search")
-    print("Element is visible? " + str(search.is_displayed()))
-    #search.send_keys("hi")
+    # находим поле для поиска пользователя
+    search = WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located((By.ID, "telegram-search-input"))
+    )
+    search.clear()
+    search.send_keys(tag)
+
+    time.sleep(3)
+
+    # находим кнопку для перехода в чат с данным пользователем
+    button = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "ListItem-button"))
+    )
 
 
 def lookup(driver, query):
@@ -36,6 +48,7 @@ def lookup(driver, query):
         invite_users = json.load(file)
 
     for tag, first_name in invite_users.items():
+        time.sleep(3)
         send_invitation(driver, tag, first_name)
 
 
