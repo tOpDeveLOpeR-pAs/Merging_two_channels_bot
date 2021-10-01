@@ -34,6 +34,8 @@ def send_invitation(driver, tag: str, first_name: str):
     time.sleep(3)
 
     # находим кнопку для перехода в чат с данным пользователем
+    """Ошибка: такая кнопка не находится, либо скрыта, либо просто не всегда"""
+    
     button = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CLASS_NAME, "ListItem-button"))
     )
