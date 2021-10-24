@@ -4,11 +4,11 @@ from parse_participants import *
 
 async def main():
     # парсинг участников канала и чата
-    channel_url = 'https://t.me/Merge_test2' #input("Введите ссылку на канал: ")
+    channel_url = input("Введите ссылку на канал: ")
     channel = await client.get_entity(channel_url)
     await dump_all_participants(channel, "data/channel_users.json")
 
-    chat_url = 'https://t.me/merge_test' #input("Введите ссылку на чат: ")
+    chat_url = input("Введите ссылку на чат: ")
     chat = await client.get_entity(chat_url)
     await dump_all_participants(chat, "data/chat_users.json")
 
