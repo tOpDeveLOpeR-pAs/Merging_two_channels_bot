@@ -1,5 +1,5 @@
 from parse_participants import *
-from send_invitaton import *
+# from send_invitaton import *
 
 
 async def main():
@@ -39,7 +39,7 @@ async def main():
         json.dump(invite_users_dict, file, ensure_ascii=False)
 
     # отправка сообщений пользователям
-    send_main()
+    # send_main()
 
 with client:
     client.loop.run_until_complete(main())
